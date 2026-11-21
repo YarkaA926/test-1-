@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Тести</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{
+  --bg:#f4f5f7; --card:#fff; --text:#1b1f24; --muted:#6b7280; --line:#e3e6ea;
+  --accent:#2f6fed; --accent-t:#fff;
+  --ok-bg:#d9f5df; --ok-line:#2da44e; --ok-t:#12501f;
+  --bad-bg:#fde0e0; --bad-line:#e5484d; --bad-t:#7a1418;
+}
+.dark{
+  --bg:#12151a; --card:#1c2128; --text:#e8ebef; --muted:#9aa4b2; --line:#2c333c;
+  --accent:#4c8dff; --accent-t:#fff;
+  --ok-bg:#12351d; --ok-line:#3fb950; --ok-t:#b8f0c4;
+  --bad-bg:#401618; --bad-line:#f85149; --bad-t:#ffc9c7;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+#app{max-width:640px;margin:0 auto;padding:14px 14px 96px}
+h1{font-size:20px;margin:6px 0 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.btn{display:block;width:100%;border:0;border-radius:12px;padding:14px;font-size:16px;font-weight:600;background:var(--accent);color:var(--accent-t);cursor:pointer}
+.btn.sec{background:var(--card);color:var(--text);border:1px solid var(--line)}
+.btn:disabled{opacity:.4}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.topic{cursor:pointer}
+.topic .t{font-weight:600}
+.topic .s{color:var(--muted);font-size:13px;margin-top:4px}
+.bar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.top{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:14px;margin-bottom:8px}
+.back{background:none;border:0;color:var(--accent);font-size:15px;padding:4px 0;cursor:pointer}
+.q{font-size:17px;margin:12px 0 14px;white-space:pre-wrap}
+.opt{display:flex;gap:10px;width:100%;text-align:left;background:var(--card);color:var(--text);border:1.5px solid var(--line);border-radius:12px;padding:12px;margin-bottom:9px;font-size:16px;cursor:pointer}
+.opt .l{flex:0 0 26px;height:26px;border-radius:50%;background:var(--line);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px}
+.opt.ok{background:var(--ok-bg);border-color:var(--ok-line);color:var(--ok-t)}
+.opt.ok .l{background:var(--ok-line);color:#fff}
+.opt.bad{background:var(--bad-bg);border-color:var(--bad-line);color:var(--bad-t)}
+.opt.bad .l{background:var(--bad-line);color:#fff}
+.opt.locked{cursor:default}
+.opt.dim{opacity:.55}
+.foot{position:fixed;left:0;right:0;bottom:0;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(transparent,var(--bg) 30%)}
+.foot .in{max-width:640px;margin:0 auto}
+.big{font-size:44px;font-weight:800;text-align:center;margin:10px 0 0}
+.mut{color:var(--muted);text-align:center;margin-bottom:12px}
+.sw{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.sw input{width:22px;height:22px}
+.rev{font-size:14px;margin:0 0 10px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.rev:last-child{border:0;margin:0;padding:0}
+.rev b.g{color:var(--ok-line)} .rev b.r{color:var(--bad-line)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const DATA = [{"id": "t0_b41e30", "title": "4. СКРОНЕВА КІСТКА, КЛИНОПОДІБНА КІСТКА (OS TEMPORALE, OS SHPENOIDEUM)", "questions": [{"n": "4.1", "q": "Жінку 45 років госпіталізовано в лікарню з гнійним запаленням барабанної порожнини. У хворої протягом тижня спостерігалися ознаки запалення слизової оболонки носової порожнини і глотки, що призвело до поширення інфекції в барабанну порожнину за ходом слухової труби (tuba auditiva). Через який канал скроневої кістки інфекція потрапила в барабанну порожнину?", "o": ["М'язово-трубний канал (canalis musculotubarius).", "Барабанний каналець (canaliculus tympanicus).", "Сонний канал (canalis caroticus).", "Каналець барабанної струни (canaliculus chordae tympani).", "Канал лицевого нерва (canalis nervi facialis)."], "a": [0]}, {"n": "4.2", "q": "У лікарню госпіталізовано чоловіка 55 років з травмою ока. Крім ушкодження очного яблука, лікар діагностував перелом очноямкової поверхні (facies orbitalis) клиноподібної кістки (os sphenoidale). На якій частині клиноподібної кістки розташована facies orbitalis?", "o": ["Тіло (corpus).", "Мале крило (ala minor).", "Велике крило (ala major).", "Крилоподібний відросток (processus pterygoideus).", "Турецьке сідло (sella turcica)."], "a": [2]}, {"n": "4.3", "q": "У нейрохірургічне відділення лікарні госпіталізовано жінку 56 років із внутрішньочерепною пухлиною. Додаткове обстеження виявило, що уражені пухлиною клиноподібна і потилична кістки в місці їх зрощення на основі черепа. Яка частина клиноподібної кістки уражена пухлиною?", "o": ["Правий крилоподібний відросток (processus pterygoideus dexter).", "Мале крило (ala minor).", "Велике крило (ala major).", "Тіло (corpus).", "Лівий крилоподібний відросток (processus pterygoideus sinister)."], "a": [3]}, {"n": "4.4", "q": "У нейрохірургічне відділення лікарні госпіталізовано жінку 46 років з пухлиною гіпофіза. КТ-обстеження хворої виявило, що пухлина зруйнувала спинку турецького сідла. Яка кістка ушкоджена пухлиною?", "o": ["Скронева кістка (os temporale).", "Клиноподібна кістка (os sphenoidale).", "Решітчаста кістка (os ethmoidale).", "Лобова кістка (os frontale).", "Потилична кістка (os occipitale)."], "a": [1]}, {"n": "4.5", "q": "У чоловіка 34 років діагностовано стиснення chorda tympani в місці її виходу із барабанної порожнини в підскроневу ямку через одну із щілин скроневої кістки. У ділянці якої щілини стиснута барабанна струна (chorda tympani)?", "o": ["Fissura petrotympanica.", "Fissura tympanomastoidea.", "Fissura petrosquamosa.", "Fissura sphenopetrosa.", "Fissura petrooccipitalis."], "a": [0]}, {"n": "4.6", "q": "До лікаря-стоматолога звернувся чоловік зі скаргами на біль у ділянці проєкції скронево-нижньощелепного суглоба, що виникає під час жування. Після обстеження лікар встановив запалення утвору скроневої кістки, що розташований спереду від нижньощелепної ямки та під основою виличного відростка. Який утвір скроневої кістки уражений?", "o": ["Дугове підвищення (eminentia arcuata).", "Суглобовий горбок (tuberculum articulare).", "Барабанне кільце (anulus tympanicus).", "Шилоподібний відросток (processus styloideus).", "Соскоподібний відросток (processus mastoideus)."], "a": [1]}, {"n": "4.7", "q": "Для уточнення діагнозу лікар направив у діагностичний центр чоловіка 45 років з симптомами порушення функцій VII та VIII пар черепних нервів. Після МРТ-обстеження виявлено, що нерви стиснуті пухлиною в лівому внутрішньому слуховому отворі (porus acusticus internus). Біля отвору якої кістки пухлина стискає нерви?", "o": ["Лівої скроневої кістки.", "Клиноподібної кістки.", "Лівої потиличної кістки.", "Лівої тім'яної кістки.", "Решітчастої кістки."], "a": [0]}, {"n": "4.8", "q": "У онкологічне відділення лікарні госпіталізовано чоловіка з позачерепною пухлиною голови. Під час операції хірург видалив разом із пухлиною частину стінки зовнішнього слухового ходу (meatus acusticus externus). Частину якої кістки видалив хірург?", "o": ["Лобової кістки (os frontale).", "Скроневої кістки (os temporale).", "Решітчастої кістки (os ethmoidale).", "Клиноподібної кістки (os sphenoidale).", "Потиличної кістки (os occipitale)."], "a": [1]}, {"n": "4.9", "q": "У нейрохірургічну клініку госпіталізовано чоловіка з внутрішньочерепною пухлиною. Після обстеження встановлено, що пухлина звужує простір, який обмежений великим і малим крилами клиноподібної кістки. Який простір звужує пухлина?", "o": ["Верхню очноямкову щілину (fissura orbitalis superior).", "Остистий отвір (foramen spinosum).", "Овальний отвір (foramen ovale).", "Круглий отвір (foramen rotundum).", "Крилоподібний канал (canalis pterygoideus)."], "a": [0]}, {"n": "4.10", "q": "Лікар діагностичного центру виявив у чоловіка внутрішньочерепну пухлину, що росте в покрівлю барабанної порожнини (tegmen tympani). Яка частина скроневої кістки зруйнована пухлиною?", "o": ["Кам'яниста частина (pars petrosa).", "Лускова частина (pars squamosa).", "Барабанна частина (pars tympanica).", "Соскоподібний відросток (processus mastoideus).", "Шилоподібний відросток (processus styloideus)."], "a": [0]}, {"n": "4.11", "q": "Після дорожньо-транспортної пригоди у лікарню госпіталізовано жінку з переломом скроневої кістки, який ускладнений кровотечею з пазухи твердої оболони головного мозку. Розрив стінки пазухи виник в тому місці, де вона прилягає до борозни на внутрішній (мозковій) поверхні соскоподібного відростка скроневої кістки. У ділянці якої борозни ушкоджена пазуха твердої оболони головного мозку?", "o": ["Борозни верхньої стрілової пазухи (sulcus sinus sagittalis superioris).", "Борозни нижньої кам'янистої пазухи (sulcus sinus petrosi inferioris).", "Борозни сигмоподібної пазухи (sulcus sinus sigmoidei).", "Борозни верхньої кам'янистої пазухи (sulcus sinus petrosi superioris).", "Борозни поперечної пазухи (sulcus sinus transversi)."], "a": [2]}, {"n": "4.12", "q": "У лікарню госпіталізовано чоловіка 57 років з гнійним запаленням глибоких лімфатичних вузлів шиї. Запалення поширилося на нерв, волокна якого через канал скроневої кістки, вхідним отвором якого є fossula petrosa, потрапляють в барабанну порожнину. На якій поверхні скроневої кістки розташована кам'яниста ямочка та який канал скроневої кістки в ній починається?", "o": ["На передній поверхні піраміди, барабанний каналець.", "На задній поверхні піраміди, барабанний каналець.", "На нижній поверхні піраміди, барабанний каналець.", "На нижній поверхні піраміди, соскоподібний каналець.", "На нижній поверхні піраміди, каналець барабанної струни."], "a": [2]}, {"n": "4.13", "q": "У лікарню госпіталізовано жінку 53 років з черепно-мозковою травмою. Рентгенологічно у неї виявлено перелом шилоподібного відростка (processus styloideus). Яка кістка ушкоджена?", "o": ["Решітчаста кістка (os ethmoidale).", "Лобова кістка (os frontale).", "Клиноподібна кістка (os sphenoidale).", "Скронева кістка (os temporale).", "Потилична кістка (os occipitale)."], "a": [3]}, {"n": "4.14", "q": "Виконуючи обстеження жінки 45 років, нейрохірург виявив звуження просвіту внутрішньої сонної артерії в місці її розташування на сонній борозні (sulcus caroticus) в середній черепній ямці. На якій кістці знаходиться звужена ділянка внутрішньої сонної артерії?", "o": ["Потиличній кістці (os occipitale).", "Скроневій кістці (os temporale).", "Решітчастій кістці (os ethmoidale).", "Лобовій кістці (os frontale).", "Клиноподібній кістці (os sphenoidale)."], "a": [4]}, {"n": "4.15", "q": "Під час операції по закриттю вродженого розщеплення піднебіння (уранопластики), при збиванні долотом крилоподібного гачка, ушкоджено великий піднебінний канал і нерв, що проходить в цьому каналі. На якому утворі клиноподібної кістки розташований крилоподібний гачок?", "o": ["Lamina medialis processus pterygoidei.", "Ala minor.", "Ala major.", "Corpus.", "Lamina lateralis processus pterygoidei."], "a": [0]}, {"n": "4.16", "q": "У лікарню каретою швидкої медичної допомоги доставлено юнака з травмою голови. Після рентгенологічного обстеження лікар виявив перелом кістки черепа. Лінія перелому проходить через підскроневий гребінь. Яка кістка травмована?", "o": ["Тім'яна кістка (os parietale).", "Клиноподібна кістка (os sphenoidale).", "Потилична кістка (os occipitale).", "Решітчаста кістка (os ethmoidale).", "Носова кістка (os nasale)."], "a": [1]}, {"n": "4.17", "q": "У лікарню госпіталізовано жінку 64 років, у якої на тлі травми нижньої щелепи виникло порушення смакової чутливості на слизовій оболонці передніх 2/3 язика. Лікар впевнений, що хвороба обумовлена ураженням нервових волокон барабанної струни, в місці її виходу з барабанної порожнини через щілину скроневої кістки. Крізь яку щілину скроневої кістки барабанна струна виходить з барабанної порожнини?", "o": ["Fissura petrotympanica.", "Fissura tympanomastoidea.", "Fissura petrosquamosa.", "Fissura sphenopetrosa.", "Fissura petrooccipitalis."], "a": [0]}, {"n": "4.18", "q": "У нейрохірургічне відділення госпіталізовано чоловіка 54 років зі скаргами на відсутність чутливості шкіри нижньої повіки, бічної поверхні зовнішнього носа, верхньої губи. Лікар під час огляду діагностував запалення другої гілки трійчастого нерва. Через який утвір гілки цього нерва виходять із середньої черепної ямки в крило-піднебінну ямку?", "o": ["Круглий отвір.", "Рваний отвір.", "Овальний отвір.", "Нижню очноямкову щілину.", "Верхню очноямкову щілину."], "a": [0]}, {"n": "4.19", "q": "У чоловіка 45 років з черепно-мозковою травмою лікар виявив перелом кістки основи черепа. Лінія перелому проходить через остистий і овальний отвори. Яка кістка ушкоджена?", "o": ["Лобова кістка (os frontale).", "Скронева кістка (os temporale).", "Решітчаста кістка (os ethmoidale).", "Клиноподібна кістка (os sphenoidale).", "Потилична кістка (os occipitale)."], "a": [3]}, {"n": "4.20", "q": "У дитини 6 років гнійне запалення середнього вуха ускладнилося гнійним запаленням комірок соскоподібного відростка. Виникла необхідність трепанації (розтину) соскоподібного відростка. На якій кістці черепа проводить трепанацію лікар та про близьке розташування якої венозної пазухи слід пам'ятати хірургу, щоб уникнути її травмування?", "o": ["На скроневій кістці, сигмоподібної.", "На скроневій кістці, верхньої стрілової.", "На потиличній кістці, сигмоподібної.", "На скроневій кістці, поперечної.", "На потиличній кістці, поперечної."], "a": [0]}, {"n": "4.21", "q": "У чоловіка 56 років після запалення лімфатичних вузлів голови виникло стиснення рубцем волокон лицевого нерва біля отвору, через який він виходить із скроневої кістки на зовнішню поверхню основи черепа. Біля якого отвору стиснутий лицевий нерв?", "o": ["Шило-соскоподібного (foramen stylomastoideum).", "Внутрішнього слухового (porus acusticus internus).", "Соскоподібного (foramen mastoideum).", "Круглого (foramen rotundum).", "Зовнішнього слухового (porus acusticus externus)."], "a": [0]}, {"n": "4.22", "q": "У чоловіка 56 років ушкоджена барабанна перетинка. Лікар виявив порушення передачі звукових коливань барабанною перетинкою до перилімфи присінку внутрішнього вуха через систему слухових кісточок. Лікар підозрює порушення іннервації m. tensor tympani та m. stapedius, які забезпечують ступінь натягування барабанної перетинки і зміщення стремінця. На якій кістці бере початок m. tensor tympani та через який канал скроневої кістки потрапляє в барабанну порожнину", "o": ["Клиноподібній кістці, каналець барабанної струни.", "Скроневій кістці, м'язово-трубний канал (canalis musculotubarius).", "Клиноподібній кістці, м'язово-трубний канал (canalis musculotubarius).", "Клиноподібній кістці, барабанний каналець (canaliculus tympanicus).", "Скроневій кістці, барабанний каналець (canaliculus tympanicus)."], "a": [2]}, {"n": "4.23", "q": "У чоловіка 25 років на МРТ-зображенні виявлена травма тім'яної, потиличної та скроневої кісток черепа, що супроводжується сильною кровотечею з пазухи твердої оболони головного мозку, яка прилягає до цих кісток. У місці якої борозни виникла кровотеча?", "o": ["Верхньої стрілової пазухи (sulcus sinus sagittalis superioris).", "Сигмоподібної пазухи (sulcus sinus sigmoidei).", "Поперечної пазухи (sulcus sinus transversi).", "Нижньої стрілової пазухи (sulcus sinus sagittalis inferioris).", "Потиличної пазухи (sulcus sinus occipitalis)."], "a": [2]}, {"n": "4.24", "q": "У лікарню госпіталізована жінка 45 років з черепно-мозковою травмою. На МРТ-зображенні діагностовано перелом пластинок крилоподібного відростка. Яка кістка травмована?", "o": ["Тім'яна кістка (os parietale).", "Решітчаста кістка (os ethmoidale).", "Лобова кістка (os frontale).", "Потилична кістка (os occipitale).", "Клиноподібна кістка (os sphenoidale)."], "a": [4]}, {"n": "4.25", "q": "У лікарню потрапив чоловік з черепно-мозковою травмою. Рентгенологічно у пацієнта виявлено перелом кістки черепа. Лінія перелому проходить через соскоподібний відросток (processus mastoideus). Яка кістка ушкоджена?", "o": ["Клиноподібна кістка (os sphenoidale).", "Скронева кістка (os temporale).", "Решітчаста кістка (os ethmoidale).", "Лобова кістка (os frontale).", "Потилична кістка (os occipitale)."], "a": [1]}, {"n": "4.26", "q": "У лікарню госпіталізована жінка 50 років із ознаками тромбозу пазухи твердої оболони головного мозку. Під час МРТ-обстеження діагностовано тромбоз пазухи твердої оболони мозку в борозні, що розташована по верхньому краю піраміди скроневої кістки. У ділянці якої борозни виникло ушкодження?", "o": ["Борозни верхньої стрілової пазухи (sulcus sinus sagittalis superioris).", "Борозни нижньої кам'янистої пазухи (sulcus sinus petrosi inferioris).", "Борозни сигмоподібної пазухи (sulcus sinus sigmoidei).", "Борозни верхньої кам'янистої пазухи (sulcus sinus petrosi superioris).", "Борозни поперечної пазухи (sulcus sinus transversi)."], "a": [3]}, {"n": "4.27", "q": "У чоловіка 56 років внаслідок гнійного запалення середнього вуха виникло руйнування задньої стінки барабанної порожнини з поширенням гною до печери соскоподібного відростка. Це ускладнилося ушкодженням нерва, що проходить в каналі скроневої кістки по задній стінці барабанної порожнини та виходить з черепа через шило-соскоподібний отвір. Який канал скроневої кістки ушкоджений?", "o": ["М'язово-трубний канал (canalis musculotubarius).", "Барабанний каналець (canaliculus tympanicus).", "Сонний канал (canalis caroticus).", "Каналець барабанної струни (canaliculus chordae tympani).", "Канал лицевого нерва (canalis nervi facialis)."], "a": [4]}, {"n": "4.28", "q": "У нейрохірургічну клініку госпіталізовано жінку 57 років із ознаками внутрішньочерепної пухлини. Під час хірургічного втручання основний етап операції був здійснений у ділянці трійчастого втиснення (impressio trigeminalis). На якій кістці був здійснений основний етап операції?", "o": ["Клиноподібної кістки (os sphenoidale).", "Скроневої кістки (os temporale).", "Решітчастої кістки (os ethmoidale).", "Лобової кістки (os frontale).", "Потиличної кістки (os occipitale)."], "a": [1]}, {"n": "4.29", "q": "У чоловіка 54 років після проведення МРТ-дослідження лікар виявив пухлину, що стискає нерви на передній поверхні кам'янистої частини скроневої кістки. Визначте, які отвори для виходу нервів з барабанної порожнини розташовані на передній поверхні кам'янистої частини скроневої кістки?", "o": ["Шило-соскоподібний та соскоподібний.", "Зовнішній та внутрішній отвори сонного каналу.", "Зовнішній та внутрішній слухові отвори.", "Отвори канальців присінка і завитки.", "Розтвори каналів великого і малого кам'янистих нервів."], "a": [4]}, {"n": "4.30", "q": "У лікарню потрапила жінка 35 років з черепно-мозковою травмою. Травма супроводжувалася кровотечею із пазухи твердої оболони головного мозку в тому місці, де вона прилягає до соскоподібного кута (angulus mastoideus) тім'яної кістки (os parietale) та утворює на ній борозну. У ділянці якої борозни виникла кровотеча", "o": ["Борозни верхньої стрілової пазухи (sulcus sinus sagittalis superioris).", "Борозни нижньої кам'янистої пазухи (sulcus sinus petrosi inferioris).", "Борозни сигмоподібної пазухи (sulcus sinus sigmoidei).", "Борозни верхньої кам'янистої пазухи (sulcus sinus petrosi superioris).", "Борозни поперечної пазухи (sulcus sinus transversi)."], "a": [2]}]}];
+
+const tg = window.Telegram && Telegram.WebApp;
+if (tg) {
+  try { tg.ready(); tg.expand(); tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch(e){}
+  if (tg.colorScheme === 'dark') document.documentElement.classList.add('dark');
+} else if (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.documentElement.classList.add('dark');
+}
+const ask = (msg, yes) => { if (tg && tg.showConfirm) { try { return tg.showConfirm(msg, ok => ok && yes()); } catch(e){} } if (confirm(msg)) yes(); };
+const haptic = t => { try { tg && tg.HapticFeedback && tg.HapticFeedback.notificationOccurred(t); } catch(e){} };
+
+// ---------- storage ----------
+const store = {
+  get(k){ try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } },
+  set(k,v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+let stats = store.get('stats') || {};     // {topicId: {best:%, last:%, runs:n}}
+let settings = store.get('settings') || {shuffleQ:true, shuffleO:false};
+
+// ---------- state ----------
+let S = null; // current session
+const $ = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const shuffle = a => { a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const LET = ['A','B','C','D','E','F'];
+
+function setBack(fn){
+  if (!tg || !tg.BackButton) return;
+  try { tg.BackButton.offClick(setBack._h); } catch(e){}
+  if (fn){ setBack._h = fn; tg.BackButton.onClick(fn); tg.BackButton.show(); } else tg.BackButton.hide();
+}
+
+// ---------- screens ----------
+function home(){
+  S = null; setBack(null);
+  let h = '<h1>🩺 Тести</h1>';
+  DATA.forEach((t,i) => {
+    const st = stats[t.id];
+    h += `<div class="card topic" onclick="start(${i})">
+      <div class="t">${esc(t.title)}</div>
+      <div class="s">${t.questions.length} питань${st ? ` · останній: ${st.last}% · кращий: ${st.best}%` : ''}</div></div>`;
+  });
+  h += `<div class="card">
+    <label class="sw"><span>Перемішувати питання</span><input type="checkbox" ${settings.shuffleQ?'checked':''} onchange="setS('shuffleQ',this.checked)"></label>
+    <label class="sw"><span>Перемішувати варіанти відповідей</span><input type="checkbox" ${settings.shuffleO?'checked':''} onchange="setS('shuffleO',this.checked)"></label>
+  </div>`;
+  $.innerHTML = h;
+}
+function setS(k,v){ settings[k]=v; store.set('settings',settings); }
+
+function start(i, onlyIdx){
+  const t = DATA[i];
+  let items = t.questions.map((q,idx) => ({q, idx}));
+  if (onlyIdx) items = items.filter(x => onlyIdx.includes(x.idx));
+  if (settings.shuffleQ) items = shuffle(items);
+  items = items.map(x => {
+    let order = x.q.o.map((_,k)=>k);
+    if (settings.shuffleO) order = shuffle(order);
+    return {idx:x.idx, q:x.q, order};
+  });
+  S = {ti:i, items, pos:0, picked:null, wrong:[], right:0, partial: !!onlyIdx};
+  setBack(() => ask('Вийти з тесту? Прогрес не збережеться.', home));
+  render();
+}
+
+function render(){
+  const it = S.items[S.pos], total = S.items.length;
+  const answered = S.picked !== null;
+  let h = `<div class="top"><button class="back" onclick="ask('Вийти з тесту? Прогрес не збережеться.', home)">← Теми</button>
+    <span>${S.pos+1} / ${total} · ✓ ${S.right}</span></div>
+    <div class="bar"><i style="width:${(S.pos + (answered?1:0))/total*100}%"></i></div>
+    <div class="q">${esc(it.q.q)}</div>`;
+  it.order.forEach((k,pos) => {
+    let cls = 'opt';
+    if (answered){
+      cls += ' locked';
+      const isRight = it.q.a.includes(k);
+      if (isRight) cls += ' ok';
+      else if (S.picked === k) cls += ' bad';
+      else cls += ' dim';
+    }
+    h += `<button class="${cls}" ${answered?'disabled':''} onclick="pick(${k})"><span class="l">${LET[pos]}</span><span>${esc(it.q.o[k])}</span></button>`;
+  });
+  if (answered){
+    h += `<div class="foot"><div class="in"><button class="btn" onclick="next()">${S.pos+1<total?'Далі →':'Результат'}</button></div></div>`;
+  }
+  $.innerHTML = h;
+  if (answered) window.scrollTo({top: document.body.scrollHeight, behavior:'smooth'});
+}
+
+function pick(k){
+  if (S.picked !== null) return;
+  const it = S.items[S.pos];
+  S.picked = k;
+  if (it.q.a.includes(k)){ S.right++; haptic('success'); }
+  else { S.wrong.push(S.pos); haptic('error'); }
+  render();
+}
+function next(){
+  S.pos++; S.picked = null;
+  window.scrollTo(0,0);
+  if (S.pos >= S.items.length) return result();
+  render();
+}
+
+function result(){
+  const total = S.items.length, pct = Math.round(S.right/total*100);
+  const t = DATA[S.ti];
+  if (!S.partial){
+    const st = stats[t.id] || {best:0, runs:0};
+    stats[t.id] = {best: Math.max(st.best, pct), last: pct, runs: st.runs+1};
+    store.set('stats', stats);
+  }
+  setBack(home);
+  let h = `<h1>Результат</h1><div class="card"><div class="big">${S.right} / ${total}</div><div class="mut">${pct}%</div>`;
+  const wrongItems = S.wrong.map(p => S.items[p]);
+  if (wrongItems.length){
+    h += `<button class="btn" onclick="start(${S.ti}, [${wrongItems.map(x=>x.idx)}])">Повторити помилки (${wrongItems.length})</button><div style="height:10px"></div>`;
+  }
+  h += `<div class="row"><button class="btn sec" onclick="start(${S.ti})">Ще раз</button><button class="btn sec" onclick="home()">До тем</button></div></div>`;
+  if (wrongItems.length){
+    h += '<div class="card"><b>Помилки</b><div style="height:8px"></div>';
+    wrongItems.forEach(it => {
+      h += `<div class="rev"><b>${esc(it.q.n)}</b> ${esc(it.q.q)}<br><b class="g">✓ ${esc(it.q.a.map(k=>it.q.o[k]).join('; '))}</b></div>`;
+    });
+    h += '</div>';
+  }
+  $.innerHTML = h;
+  window.scrollTo(0,0);
+}
+
+home();
+</script>
+</body>
+</html>
