@@ -1,25 +1,21 @@
 /* ====== Теми ====== */
 :root,:root[data-theme=dark]{
-  --bg:#1a060c;--bg2:#240a12;--card:#2e0e18;--text:#f7eaed;--muted:#c9a6af;--line:#4d1b2b;
-  --accent:#ff4d6a;--accent-t:#fff;--soft:#401424;
-  --ok-bg:#14391f;--ok-line:#3fb950;--ok-t:#c8f4d1;
-  --bad-bg:#6e1322;--bad-line:#ff7487;--bad-t:#ffdbe0;
-  --warn-bg:#4a3512;--warn-line:#e0a800;
-  --hero-bg1:#3d101e;--hero-bg2:#0f0307;
-  --body-grad:radial-gradient(1200px 600px at 50% -10%,#3a0f1c 0%,transparent 70%);
+  --bg:#000;--bg2:#0a0a0a;--card:#0b0b0b;--text:#f2f2f2;--muted:#9a9a9a;--line:#262626;
+  --accent:#fff;--accent-t:#000;--soft:#161616;
+  --ok-bg:#12351c;--ok-line:#3fb950;--ok-t:#c8f4d1;
+  --bad-bg:#4a1218;--bad-line:#f85149;--bad-t:#ffd5d3;
+  --warn-bg:#1c1c1c;--warn-line:#8a8a8a;
 }
 :root[data-theme=light]{
-  --bg:#ffffff;--bg2:#fff4f5;--card:#ffffff;--text:#2a1216;--muted:#7d5a60;--line:#f1d3d8;
-  --accent:#c8102e;--accent-t:#fff;--soft:#fdecee;
+  --bg:#fff;--bg2:#f7f7f7;--card:#fff;--text:#0a0a0a;--muted:#6b6b6b;--line:#e3e3e3;
+  --accent:#000;--accent-t:#fff;--soft:#f2f2f2;
   --ok-bg:#d9f5df;--ok-line:#2da44e;--ok-t:#12501f;
   --bad-bg:#fde0e0;--bad-line:#e5484d;--bad-t:#7a1418;
-  --warn-bg:#fff4d6;--warn-line:#e0a800;
-  --hero-bg1:#ffffff;--hero-bg2:#ffe6ea;
-  --body-grad:radial-gradient(1200px 500px at 50% -10%,#ffe3e7 0%,transparent 70%);
+  --warn-bg:#f2f2f2;--warn-line:#999;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg) var(--body-grad) no-repeat;color:var(--text);font:calc(16px*var(--fs,1))/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;transition:background-color .3s,color .3s}
+body{margin:0;background:var(--bg);color:var(--text);font:calc(16px*var(--fs,1))/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;transition:background-color .3s,color .3s}
 
 /* ====== Шапка ====== */
 .top{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:10px 16px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);transition:background .3s,border-color .3s}
@@ -31,7 +27,8 @@ body{margin:0;background:var(--bg) var(--body-grad) no-repeat;color:var(--text);
 .readbar i{display:block;height:100%;width:0;background:var(--accent)}
 
 /* ====== Заставка ====== */
-#splash{position:fixed;inset:0;width:100%;height:100%;z-index:1;display:block;pointer-events:none;background:radial-gradient(ellipse at center,var(--hero-bg1) 0%,var(--hero-bg2) 100%)}
+#splash{position:fixed;inset:0;width:100%;height:100%;z-index:1;display:block;pointer-events:none}
+#eye{position:fixed;inset:0;width:100%;height:100%;z-index:2;display:block;pointer-events:none}
 .splash-text{position:fixed;left:0;right:0;bottom:12vh;z-index:11;text-align:center;pointer-events:none;color:var(--text)}
 .splash-text .st{font-size:clamp(22px,5vw,38px);font-weight:800;letter-spacing:.04em}
 .splash-text .sh{margin-top:14px;color:var(--muted);font-size:14px;animation:bob 1.8s ease-in-out infinite}
@@ -67,7 +64,7 @@ a.card:hover{border-color:var(--accent);transform:translateY(-1px)}
 /* ====== Головна ====== */
 .greet{min-height:78vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 10px}
 .greet h1{font-size:clamp(28px,7vw,52px);letter-spacing:.03em;font-weight:800;margin:0;
-  background:linear-gradient(90deg,var(--accent),var(--text));-webkit-background-clip:text;background-clip:text;color:transparent}
+  color:var(--text)}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .8s,transform .8s}
 .reveal.in{opacity:1;transform:none}
 .tabs{display:flex;gap:8px;border-bottom:2px solid var(--line);margin:30px 0 16px}

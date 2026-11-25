@@ -12,10 +12,10 @@ var state={mode:'bg',p:0}, camZ=ZEND, clock=0, col={};
 function readColors(){
   var dark=document.documentElement.dataset.theme!=='light';
   col.dark=dark;
-  col.line = dark?'255,110,140':'190,16,46';
-  col.soma = dark?'#ffd5dc':'#c8102e';
-  col.glow = dark?'rgba(255,90,120,':'rgba(200,16,46,';
-  col.pulse= dark?'#ffffff':'#ff3b5c';
+  col.line = dark?'255,255,255':'0,0,0';
+  col.soma = dark?'#ffffff':'#000000';
+  col.glow = dark?'rgba(255,255,255,':'rgba(0,0,0,';
+  col.pulse= dark?'#ffffff':'#000000';
   col.irisIn = dark?'#ff9aa9':'#ffb3bd';
   col.irisMid= dark?'#b81f3d':'#c8102e';
   col.irisOut= dark?'#2c0610':'#6e0a1b';
@@ -53,7 +53,7 @@ function drawNetwork(alphaMul){
         var qx=cx+((a.x+b.x)/2+(h(k,i,6+c)-.5)*70-swx)*ms, qy=cy+((a.y+b.y)/2+(h(k,i,8+c)-.5)*70-swy)*ms;
         var active=h(k,i,10+c)>0.38;
         ctx.strokeStyle='rgba('+col.line+','+(al*(active?0.55:0.28))+')';
-        ctx.lineWidth=Math.max(0.5,Math.min(3,s1*1.6));
+        ctx.lineWidth=Math.max(0.5,Math.min(1.8,s1*1.0));
         ctx.beginPath(); ctx.moveTo(x1,y1); ctx.quadraticCurveTo(qx,qy,x2,y2); ctx.stroke();
         if(active){
           var ph=(T*0.55+h(k,i,12+c))%1, u=1-ph;
@@ -116,12 +116,10 @@ function drawIris(){
 
 function frame(){
   ctx.clearRect(0,0,W,H);
-  var nAlpha = smooth(ZP*0.35,ZP*0.95,camZ)*0.85+0.15*smooth(ZP*0.9,ZP+200,camZ);
-  if(camZ>=ZP*0.35) drawNetwork(nAlpha);
-  drawIris();
+  drawNetwork(col.dark?1:0.72);
 }
 function needsLoop(){ return state.mode!=='home' || state.p>=1 || Math.abs(target()-camZ)>0.4; }
-var ZSTART=-250, first=true;
+var ZSTART=40, first=true;
 function target(){ return ZSTART+state.p*(ZEND-ZSTART); }
 function tick(now){
   var dt=Math.min(64,now-last||16); last=now;

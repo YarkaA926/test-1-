@@ -12,7 +12,7 @@ window.I18N = {
   mistakes:'Помилки', yourAns:'Ваша відповідь', repeatWrong:'Повторити лише помилки', retake:'Пройти заново', toTopics:'До тем',
   perfect:'Без жодної помилки 🎉', back:'← До теми', test:'тест',
   notFound:'Сторінку не знайдено.', toHome:'На головну',
-  settings:'Налаштування', theme:'Тема', tDark:'Темна (бордова)', tLight:'Світла (біло-червона)', tAuto:'Як у системі',
+  settings:'Налаштування', theme:'Тема', tDark:'Темна (чорна)', tLight:'Світла (біла)', tAuto:'Як у системі',
   lang:'Мова', fontSize:'Розмір тексту', close:'Закрити', resetProgress:'Скинути мій прогрес', resetAsk:'Скинути весь прогрес (прочитане та результати тестів)?',
   onlyUk:'Цей матеріал поки доступний лише українською.', contin:'Продовжити', lastOpened:'Ви зупинилися на',
   tableOfTopics:'Теми', soon:'Скоро'
@@ -29,7 +29,7 @@ window.I18N = {
   mistakes:'Ошибки', yourAns:'Ваш ответ', repeatWrong:'Повторить только ошибки', retake:'Пройти заново', toTopics:'К темам',
   perfect:'Без единой ошибки 🎉', back:'← К теме', test:'тест',
   notFound:'Страница не найдена.', toHome:'На главную',
-  settings:'Настройки', theme:'Тема', tDark:'Тёмная (бордовая)', tLight:'Светлая (бело-красная)', tAuto:'Как в системе',
+  settings:'Настройки', theme:'Тема', tDark:'Тёмная (чёрная)', tLight:'Светлая (белая)', tAuto:'Как в системе',
   lang:'Язык', fontSize:'Размер текста', close:'Закрыть', resetProgress:'Сбросить мой прогресс', resetAsk:'Сбросить весь прогресс (прочитанное и результаты тестов)?',
   onlyUk:'Этот материал пока доступен только на украинском.', contin:'Продолжить', lastOpened:'Вы остановились на',
   tableOfTopics:'Темы', soon:'Скоро'
@@ -46,7 +46,7 @@ window.I18N = {
   mistakes:'Mistakes', yourAns:'Your answer', repeatWrong:'Retry mistakes only', retake:'Retake', toTopics:'To topics',
   perfect:'Not a single mistake 🎉', back:'← To topic', test:'quiz',
   notFound:'Page not found.', toHome:'Home',
-  settings:'Settings', theme:'Theme', tDark:'Dark (burgundy)', tLight:'Light (white & red)', tAuto:'System default',
+  settings:'Settings', theme:'Theme', tDark:'Dark (black)', tLight:'Light (white)', tAuto:'System default',
   lang:'Language', fontSize:'Text size', close:'Close', resetProgress:'Reset my progress', resetAsk:'Reset all progress (read topics and quiz results)?',
   onlyUk:'This material is currently available in Ukrainian only.', contin:'Continue', lastOpened:'You stopped at',
   tableOfTopics:'Topics', soon:'Soon'

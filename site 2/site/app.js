@@ -19,6 +19,7 @@ function applyTheme(){
   var th = themePref==='auto' ? (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light') : themePref;
   document.documentElement.dataset.theme=th;
   if(window.Splash) Splash.refreshColors();
+  if(window.Eye) Eye.setTheme(th==='light');
 }
 function applyStatic(){
   document.documentElement.lang = lang;
@@ -52,7 +53,7 @@ function resetPage(isHome){
   app.classList.toggle('sheet',!isHome);
   document.getElementById('readbar').hidden=true;
   document.getElementById('splashText').style.display=isHome?'':'none';
-  if(!isHome && window.Splash) Splash.setBg();
+  if(!isHome){ if(window.Eye) Eye.hide(); document.getElementById('splash').style.opacity=''; if(window.Splash) Splash.setBg(); }
 }
 function onScroll(){
   var y=window.scrollY, vh=window.innerHeight;
@@ -60,8 +61,11 @@ function onScroll(){
   if(home){
     var cb=document.getElementById('courses'), S=Math.max(300,(cb?cb.offsetTop:vh*4)-vh*0.3);
     var p=Math.min(1,y/S);
-    Splash.setHome(p);
-    document.getElementById('splashText').style.opacity=Math.max(0,1-p*10);
+    var pz=Math.min(1,p/0.22);
+    if(window.Eye&&Eye.ok) Eye.setDive(pz);
+    Splash.setHome(Math.max(0,(p-0.14)/0.86));
+    document.getElementById('splash').style.opacity=(window.Eye&&Eye.ok)?Eye.netOpacity():1;
+    document.getElementById('splashText').style.opacity=Math.max(0,1-pz*8);
     topEl.classList.toggle('over',p<0.04);
   } else topEl.classList.remove('over');
   document.getElementById('toTop').hidden = y<600;
@@ -212,9 +216,9 @@ function openPanel(){
   function seg(items,cur,attr,cls){ return '<div class="seg '+(cls||'')+'">'+items.map(function(i){ return '<button data-'+attr+'="'+i[0]+'" aria-pressed="'+(i[0]===cur)+'">'+i[1]+'</button>'; }).join('')+'</div>'; }
   panel.innerHTML='<h3>⚙️ '+esc(tr('settings'))+'</h3>'+
    '<div class="grp"><div class="lbl">'+esc(tr('theme'))+'</div>'+seg([
-      ['dark','<span class="swatch" style="background:#1a060c"></span>'+esc(tr('tDark'))],
-      ['light','<span class="swatch" style="background:#fff;border-color:#c8102e"></span>'+esc(tr('tLight'))],
-      ['auto','<span class="swatch" style="background:linear-gradient(90deg,#1a060c 50%,#fff 50%)"></span>'+esc(tr('tAuto'))]],themePref,'theme')+'</div>'+
+      ['dark','<span class="swatch" style="background:#000;border-color:#555"></span>'+esc(tr('tDark'))],
+      ['light','<span class="swatch" style="background:#fff;border-color:#999"></span>'+esc(tr('tLight'))],
+      ['auto','<span class="swatch" style="background:linear-gradient(90deg,#000 50%,#fff 50%);border-color:#777"></span>'+esc(tr('tAuto'))]],themePref,'theme')+'</div>'+
    '<div class="grp"><div class="lbl">'+esc(tr('lang'))+'</div>'+seg([['uk','Українська'],['ru','Русский'],['en','English']],lang,'lang')+'</div>'+
    '<div class="grp"><div class="lbl">'+esc(tr('fontSize'))+'</div>'+seg([['0.9','A−'],['1','A'],['1.15','A+'],['1.3','A++']],String(fs),'fs','h')+'</div>'+
    '<div class="grp"><button class="danger" id="reset">'+esc(tr('resetProgress'))+'</button></div>'+
