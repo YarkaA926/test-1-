@@ -125,8 +125,8 @@ body.hasHero:not(.nosplash) .splash-text,body.hasHero:not(.nosplash) .greet h1,b
 body.hasHero:not(.nosplash) .splash-text .sh{color:#e6e6e6}
 body:not(.nosplash) #courses{background:color-mix(in srgb,var(--bg) 84%,transparent);border-radius:18px;padding:16px;margin-bottom:30px}
 .side{position:fixed;top:0;bottom:0;z-index:1;display:none;pointer-events:none;overflow:hidden}
-.side video{width:100%;height:100%;object-fit:cover;display:block}
-:root[data-theme=light] .side video{filter:invert(1)}
+.side canvas{width:100%;height:100%;display:block}
+:root[data-theme=light] .side canvas{filter:invert(1)}
 
 body.nosplash.hasSide .side{display:block}
 body.nosplash.hasSide #splash{display:none}
