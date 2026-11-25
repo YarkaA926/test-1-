@@ -45,6 +45,64 @@ function topic(s,id){ return s && s.topics.filter(function(t){return t.id===id;}
 function pct(a,b){ return b? Math.round(a*100/b):0; }
 function tname(t){ return (t.num!=null?t.num+'. ':'')+T(t.title); }
 
+
+/* ---------- відео: око на головній, клітини з боків інших сторінок ---------- */
+var HV=document.getElementById('heroVid');
+var SV=[].slice.call(document.querySelectorAll('.side video'));
+var heroState='idle', sideState='idle';
+var heroDur=0, heroT=0, heroTarget=0, heroRaf=0, heroLast=0, idleMode=false, idlePh=0;
+function syncEngines(){
+  var home=!document.body.classList.contains('nosplash');
+  var netOff = home ? heroState==='ok' : sideState==='ok';
+  if(window.Splash){ if(netOff) Splash.off(); else Splash.on(); }
+  if(window.Eye && (!home || heroState==='ok')) Eye.hide();
+}
+function loadHero(){
+  if(heroState!=='idle') return;
+  heroState='loading'; document.body.classList.add('heroLoading');
+  function done(ok){
+    document.body.classList.remove('heroLoading');
+    heroState=ok?'ok':'fail';
+    document.body.classList.toggle('hasHero',ok);
+    syncEngines(); onScroll();
+  }
+  HV.addEventListener('loadedmetadata',function(){ heroDur=HV.duration||0; done(heroDur>1); },{once:true});
+  HV.addEventListener('error',function(){ done(false); },{once:true});
+  HV.muted=true; HV.src='media/eye.mp4'; HV.load();
+}
+function loadSide(){
+  if(sideState!=='idle') return;
+  sideState='loading';
+  SV.forEach(function(v,i){
+    v.muted=true;
+    v.addEventListener('loadedmetadata',function(){ if(i===1 && v.duration>2) try{ v.currentTime=v.duration/2; }catch(e){} },{once:true});
+    v.addEventListener('loadeddata',function(){
+      if(sideState!=='ok'){ sideState='ok'; document.body.classList.add('hasSide'); syncEngines(); }
+    },{once:true});
+    v.addEventListener('error',function(){ if(i===0 && sideState!=='ok'){ sideState='fail'; syncEngines(); if(window.Splash&&document.body.classList.contains('nosplash')) Splash.setBg(); } },{once:true});
+    v.src='media/cells.mp4'; v.load();
+  });
+}
+function playSide(on){ SV.forEach(function(v){ if(on){ var pr=v.play(); if(pr&&pr.catch) pr.catch(function(){}); } else v.pause(); }); }
+function heroUpdate(p){
+  idleMode = p>=0.985;
+  heroTarget = Math.min(heroDur-0.04,p*heroDur);
+  if(!heroRaf){ heroLast=performance.now(); heroRaf=requestAnimationFrame(heroTick); }
+}
+function heroTick(now){
+  heroRaf=0;
+  if(heroState!=='ok' || document.body.classList.contains('nosplash')) return;
+  var dt=Math.min(0.06,(now-heroLast)/1000||0.016); heroLast=now;
+  var end=heroDur-0.04, L=end-heroDur*0.35;
+  if(idleMode){
+    idlePh+=dt*0.6;
+    var m=idlePh%(2*L), tri=m<L?m:2*L-m;
+    heroT=heroTarget=end-tri;
+  } else { idlePh=0; heroT+=(heroTarget-heroT)*Math.min(1,dt*10); }
+  if(!HV.seeking && Math.abs(HV.currentTime-heroT)>0.015){ try{ HV.currentTime=heroT; }catch(e){} }
+  if(idleMode || Math.abs(heroTarget-heroT)>0.01) heroRaf=requestAnimationFrame(heroTick);
+}
+
 /* ---------- стан сторінки ---------- */
 var scrollHandlers=[];
 function resetPage(isHome){
@@ -53,7 +111,9 @@ function resetPage(isHome){
   app.classList.toggle('sheet',!isHome);
   document.getElementById('readbar').hidden=true;
   document.getElementById('splashText').style.display=isHome?'':'none';
-  if(!isHome){ if(window.Eye) Eye.hide(); document.getElementById('splash').style.opacity=''; if(window.Splash) Splash.setBg(); }
+  if(!isHome){ if(window.Eye) Eye.hide(); document.getElementById('splash').style.opacity=''; loadSide(); playSide(true); if(window.Splash) Splash.setBg(); }
+  else { playSide(false); loadHero(); }
+  syncEngines();
 }
 function onScroll(){
   var y=window.scrollY, vh=window.innerHeight;
@@ -61,11 +121,16 @@ function onScroll(){
   if(home){
     var cb=document.getElementById('courses'), S=Math.max(300,(cb?cb.offsetTop:vh*4)-vh*0.3);
     var p=Math.min(1,y/S);
-    var pz=Math.min(1,p/0.22);
-    if(window.Eye&&Eye.ok) Eye.setDive(pz);
-    Splash.setHome(Math.max(0,(p-0.14)/0.86));
-    document.getElementById('splash').style.opacity=(window.Eye&&Eye.ok)?Eye.netOpacity():1;
-    document.getElementById('splashText').style.opacity=Math.max(0,1-pz*8);
+    if(heroState==='ok'){
+      heroUpdate(p);
+      document.getElementById('splashText').style.opacity=Math.max(0,1-p*10);
+    } else if(heroState==='fail'){
+      var pz=Math.min(1,p/0.22);
+      if(window.Eye&&Eye.ok) Eye.setDive(pz);
+      Splash.setHome(Math.max(0,(p-0.14)/0.86));
+      document.getElementById('splash').style.opacity=(window.Eye&&Eye.ok)?Eye.netOpacity():1;
+      document.getElementById('splashText').style.opacity=Math.max(0,1-pz*8);
+    }
     topEl.classList.toggle('over',p<0.04);
   } else topEl.classList.remove('over');
   document.getElementById('toTop').hidden = y<600;

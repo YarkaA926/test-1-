@@ -132,10 +132,13 @@ function tick(now){
   if(!reduce && needsLoop()) raf=requestAnimationFrame(tick); else running=false;
 }
 function schedule(){
+  if(state.off) return;
   if(reduce){ frame(); return; }
   if(!running){ running=true; last=0; raf=requestAnimationFrame(tick); }
 }
 window.Splash={
+  off:function(){ state.off=true; stop(); ctx.clearRect(0,0,W,H); },
+  on:function(){ if(state.off){ state.off=false; schedule(); } },
   setHome:function(p){
     var wasBg=state.mode!=='home';
     state.mode='home'; state.p=Math.max(0,Math.min(1,p));
