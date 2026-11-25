@@ -119,7 +119,8 @@ a.card:hover{border-color:var(--accent);transform:translateY(-1px)}
 /* ====== Відео ====== */
 #heroVid{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;pointer-events:none;background:#000}
 body.hasHero:not(.nosplash) #heroVid{display:block}
-body.hasHero #splash,body.hasHero #eye{display:none!important}
+body.hasHero #eye{display:none!important}
+body.hasHero:not(.nosplash) #splash{opacity:0}
 body.heroLoading #splash,body.heroLoading #eye{visibility:hidden}
 body.hasHero:not(.nosplash) .splash-text,body.hasHero:not(.nosplash) .greet h1,body.hasHero:not(.nosplash) .top.over .brand{color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.65)}
 body.hasHero:not(.nosplash) .splash-text .sh{color:#e6e6e6}

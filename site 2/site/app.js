@@ -50,10 +50,10 @@ function tname(t){ return (t.num!=null?t.num+'. ':'')+T(t.title); }
 var HV=document.getElementById('heroVid');
 var SRC=document.getElementById('sideSrc'), SC=[].slice.call(document.querySelectorAll('.side canvas')), SCx=SC.map(function(c){return c.getContext('2d',{alpha:false});}), sideOn=false, sideLast=0;
 var heroState='idle', sideState='idle';
-var heroDur=0, heroT=0, heroTarget=0, heroRaf=0, heroLast=0, idleMode=false, idlePh=0;
+var netWanted=false, heroDur=0, heroT=0, heroTarget=0, heroRaf=0, heroLast=0, idleMode=false, idlePh=0;
 function syncEngines(){
   var home=!document.body.classList.contains('nosplash');
-  var netOff = home ? heroState==='ok' : sideState==='ok';
+  var netOff = home ? (heroState==='ok' && !netWanted) : sideState==='ok';
   if(window.Splash){ if(netOff) Splash.off(); else Splash.on(); }
   if(window.Eye && (!home || heroState==='ok')) Eye.hide();
 }
@@ -88,15 +88,15 @@ function loadSide(){
     if(sideState!=='ok'){ sideState='ok'; document.body.classList.add('hasSide'); sideSize(); syncEngines(); if(sideOn) playSide(true); }
   },{once:true});
   SRC.addEventListener('error',function(){ if(sideState!=='ok'){ sideState='fail'; syncEngines(); if(window.Splash&&document.body.classList.contains('nosplash')) Splash.setBg(); } },{once:true});
-  SRC.src='media/dna.mp4?v=5'; SRC.load();
+  SRC.src='media/dna.mp4?v=6'; SRC.load();
 }
 function sideSize(){
   SC.forEach(function(c){ var r=c.parentNode.getBoundingClientRect(); if(!r.width) return; var w=Math.min(640,Math.round(r.width)), h=Math.round(w*r.height/r.width); if(c.width!==w||c.height!==h){ c.width=w; c.height=h; } });
 }
 function sideFrame(now){
   if(!sideOn) return;
-  if(now-sideLast>30 && SRC.readyState>=2){
-    sideLast=now;
+  if(SRC.readyState>=2 && SRC.currentTime!==sideLast){
+    sideLast=SRC.currentTime;
     var vw=SRC.videoWidth, vh=SRC.videoHeight;
     SC.forEach(function(c,i){
       if(!c.width) return;
@@ -123,8 +123,13 @@ function heroDraw(t){
   hCtx.drawImage(sh,(f%7)*FW,Math.floor(f/7)*FH,FW,FH,0,0,FW,FH); hShown=idx;
 }
 function heroUpdate(p){
-  idleMode = p>=0.985;
+  idleMode = false;
   heroTarget = p;
+  var k=Math.max(0,Math.min(1,(p-0.68)/0.27));
+  HV.style.opacity=String(1-k);
+  var sp=document.getElementById('splash'); sp.style.opacity=String(k);
+  var want=k>0; if(want!==netWanted){ netWanted=want; syncEngines(); }
+  if(want && window.Splash) Splash.setBg();
   if(!heroRaf){ heroLast=performance.now(); heroRaf=requestAnimationFrame(heroTick); }
 }
 function heroTick(now){
