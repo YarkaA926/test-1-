@@ -57,18 +57,28 @@ function syncEngines(){
   if(window.Splash){ if(netOff) Splash.off(); else Splash.on(); }
   if(window.Eye && (!home || heroState==='ok')) Eye.hide();
 }
+var HF=[], HN=210, HPER=35, FW=512, FH=288, hCtx=null, hShown=-1;
 function loadHero(){
   if(heroState!=='idle') return;
   heroState='loading'; document.body.classList.add('heroLoading');
-  function done(ok){
+  hCtx=HV.getContext('2d',{alpha:false}); HV.width=FW; HV.height=FH;
+  var done=false;
+  function finish(ok){
+    if(done) return; done=true;
     document.body.classList.remove('heroLoading');
     heroState=ok?'ok':'fail';
     document.body.classList.toggle('hasHero',ok);
     syncEngines(); onScroll();
   }
-  HV.addEventListener('loadedmetadata',function(){ heroDur=HV.duration||0; done(heroDur>1); },{once:true});
-  HV.addEventListener('error',function(){ done(false); },{once:true});
-  HV.muted=true; HV.src='media/eye.mp4'; HV.load();
+  for(var i=0;i<HN/HPER;i++){
+    (function(i){
+      var im=new Image(); im.decoding='async';
+      im.onload=function(){ if(i===0){ hCtx.drawImage(im,0,0,FW,FH,0,0,FW,FH); hShown=0; finish(true); } };
+      im.onerror=function(){ if(i===0) finish(false); };
+      im.src='media/eye/s'+i+'.jpg?v=4';
+      HF[i]=im;
+    })(i);
+  }
 }
 function loadSide(){
   if(sideState!=='idle') return;
@@ -84,23 +94,33 @@ function loadSide(){
   });
 }
 function playSide(on){ SV.forEach(function(v){ if(on){ var pr=v.play(); if(pr&&pr.catch) pr.catch(function(){}); } else v.pause(); }); }
+function heroDraw(t){
+  var idx=Math.round(Math.max(0,Math.min(1,t))*(HN-1)), k, sh, ok=false;
+  for(k=0;k<HN&&!ok;k++){
+    var j=idx+(k%2?-1:1)*Math.ceil(k/2); if(j<0||j>=HN) continue;
+    sh=HF[Math.floor(j/HPER)]; if(sh&&sh.complete&&sh.naturalWidth){ idx=j; ok=true; }
+  }
+  if(!ok||idx===hShown) return;
+  var f=idx%HPER; sh=HF[Math.floor(idx/HPER)];
+  hCtx.drawImage(sh,(f%7)*FW,Math.floor(f/7)*FH,FW,FH,0,0,FW,FH); hShown=idx;
+}
 function heroUpdate(p){
   idleMode = p>=0.985;
-  heroTarget = Math.min(heroDur-0.04,p*heroDur);
+  heroTarget = p;
   if(!heroRaf){ heroLast=performance.now(); heroRaf=requestAnimationFrame(heroTick); }
 }
 function heroTick(now){
   heroRaf=0;
   if(heroState!=='ok' || document.body.classList.contains('nosplash')) return;
   var dt=Math.min(0.06,(now-heroLast)/1000||0.016); heroLast=now;
-  var end=heroDur-0.04, L=end-heroDur*0.35;
+  var lo=0.35;
   if(idleMode){
-    idlePh+=dt*0.6;
-    var m=idlePh%(2*L), tri=m<L?m:2*L-m;
-    heroT=heroTarget=end-tri;
-  } else { idlePh=0; heroT+=(heroTarget-heroT)*Math.min(1,dt*10); }
-  if(!HV.seeking && Math.abs(HV.currentTime-heroT)>0.015){ try{ HV.currentTime=heroT; }catch(e){} }
-  if(idleMode || Math.abs(heroTarget-heroT)>0.01) heroRaf=requestAnimationFrame(heroTick);
+    idlePh+=dt*0.035;
+    var L=1-lo, m=idlePh%(2*L), tri=m<L?m:2*L-m;
+    heroT=heroTarget=1-tri;
+  } else { idlePh=0; heroT+=(heroTarget-heroT)*Math.min(1,dt*12); }
+  heroDraw(heroT);
+  if(idleMode || Math.abs(heroTarget-heroT)>0.0015) heroRaf=requestAnimationFrame(heroTick);
 }
 
 /* ---------- стан сторінки ---------- */
