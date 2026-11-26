@@ -178,6 +178,26 @@ footer.foot{border-top:1px solid var(--line);padding:26px clamp(20px,5vw,64px);d
 .seg button[aria-pressed=true]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700}
 .swatch{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:8px;vertical-align:-2px;border:1px solid var(--line)}
 .danger{margin-top:8px;border:0;background:transparent;color:var(--muted);text-decoration:underline;cursor:pointer;font:inherit;font-size:13px;font-weight:600;padding:6px 0}
+/* ====== 3D-атлас ====== */
+.atlas{margin:6px 0 18px}
+.a3d{position:relative;height:clamp(320px,58vh,540px);border-radius:var(--radius);background:radial-gradient(circle at 50% 40%,var(--card),var(--soft));border:1px solid var(--line);overflow:hidden;margin-top:10px}
+.a3d canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.a3d-msg{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;color:var(--muted);font-weight:600;font-size:14px}
+.a3d-lab{position:absolute;left:12px;top:12px;background:var(--ink);color:var(--paper);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700;max-width:80%}
+.a3d-bar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+.a3d-layers{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;font-weight:600}
+.a3d-layers label{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.a3d-layers input{accent-color:var(--accent)}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.dot.bone{background:#e6dac0;border:1px solid #b9ad92}.dot.muscle{background:#b64a40}.dot.ligament{background:#e9d36f}.dot.joint{background:#6fa8c7}
+.a3d-btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.a3d-btn:hover{border-color:var(--ink)}
+.a3d-hint,.a3d-note{font-size:12.5px;color:var(--muted);font-weight:600;margin-top:8px;line-height:1.5}
+.a3d-note a{color:var(--accent)}
+.a3d-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;max-height:150px;overflow-y:auto}
+.a3d-chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 12px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;text-transform:capitalize}
+.a3d-chip:hover{border-color:var(--ink)}
+.a3d-chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 @media(max-width:560px){
   .course-grid{grid-template-columns:repeat(2,1fr)}
   .summary .line{width:100%}
@@ -320,6 +340,7 @@ window.SUBJECTS.push({ id: 'chemistry', course: 1, icon: '⚗️', title: {uk:'�
 /* Тексти інтерфейсу. Латинські терміни в матеріалах не перекладаються. */
 window.I18N = {
  uk:{
+  atlasOpen:'Відкрити 3D-атлас', atlasLoading:'Завантаження моделі…', atlasFail:'Не вдалося завантажити модель. Перевір, що папка models лежить поруч з index.html.', atlasNoGL:'Ваш браузер не підтримує 3D (WebGL).', atlasReset:'Скинути вигляд', atlasHint:'Крути пальцем або мишею, масштабуй щипком чи коліщатком. Натисни на структуру, щоб побачити назву.', atlasBone:'Кістки', atlasMuscle:'М’язи', atlasLig:'Зв’язки й сухожилки', atlasDisc:'Диски й суглоби', atlasNames:'Назви структур англійською, як у базі.', atlasCredit:'3D-моделі: BodyParts3D, © The Database Center for Life Science, ліцензія', atlasExt:'Знайти 3D-модель у Sketchfab', atlasExtNote:'Для цієї теми власної моделі немає, відкриється пошук на зовнішньому сайті (потрібен інтернет).',
   brand:'МедУнивер', kicker:'Лікувальна справа', h1a:'Шість років.', h1b:'Один пульс.', h1c:'Твій маршрут.',
   lead:'Конспекти, тести й усі предмети шести курсів — в одному місці. Обери курс і рухайся вперед.',
   yearTxt:'6 років · <b>12 000</b> годин', chooseCourse:'Вибери курс', chooseHint:'Натисни на курс, щоб побачити предмети',
@@ -342,6 +363,7 @@ window.I18N = {
   tableOfTopics:'Теми', soon:'Скоро'
  },
  ru:{
+  atlasOpen:'Открыть 3D-атлас', atlasLoading:'Загрузка модели…', atlasFail:'Не удалось загрузить модель. Проверь, что папка models лежит рядом с index.html.', atlasNoGL:'Ваш браузер не поддерживает 3D (WebGL).', atlasReset:'Сбросить вид', atlasHint:'Вращай пальцем или мышью, масштабируй щипком или колёсиком. Нажми на структуру, чтобы увидеть название.', atlasBone:'Кости', atlasMuscle:'Мышцы', atlasLig:'Связки и сухожилия', atlasDisc:'Диски и суставы', atlasNames:'Названия структур на английском, как в базе.', atlasCredit:'3D-модели: BodyParts3D, © The Database Center for Life Science, лицензия', atlasExt:'Найти 3D-модель в Sketchfab', atlasExtNote:'Для этой темы своей модели нет, откроется поиск на внешнем сайте (нужен интернет).',
   brand:'МедУнивер', kicker:'Лечебное дело', h1a:'Шесть лет.', h1b:'Один пульс.', h1c:'Твой маршрут.',
   lead:'Конспекты, тесты и все предметы шести курсов — в одном месте. Выбери курс и двигайся вперёд.',
   yearTxt:'6 лет · <b>12 000</b> часов', chooseCourse:'Выбери курс', chooseHint:'Нажми на курс, чтобы увидеть предметы',
@@ -364,6 +386,7 @@ window.I18N = {
   tableOfTopics:'Темы', soon:'Скоро'
  },
  en:{
+  atlasOpen:'Open 3D atlas', atlasLoading:'Loading model…', atlasFail:'Could not load the model. Make sure the models folder sits next to index.html.', atlasNoGL:'Your browser does not support 3D (WebGL).', atlasReset:'Reset view', atlasHint:'Drag to rotate, pinch or scroll to zoom. Tap a structure to see its name.', atlasBone:'Bones', atlasMuscle:'Muscles', atlasLig:'Ligaments and tendons', atlasDisc:'Discs and joints', atlasNames:'Structure names are in English, as in the source database.', atlasCredit:'3D models: BodyParts3D, © The Database Center for Life Science, license', atlasExt:'Find a 3D model on Sketchfab', atlasExtNote:'There is no built-in model for this topic; a search on an external site opens (internet required).',
   brand:'MedUniver', kicker:'General medicine', h1a:'Six years.', h1b:'One pulse.', h1c:'Your route.',
   lead:'Notes, tests and every subject of all six years in one place. Pick a year and move forward.',
   yearTxt:'6 years · <b>12,000</b> hours', chooseCourse:'Pick a year', chooseHint:'Tap a year to see its subjects',
@@ -438,7 +461,9 @@ function tname(t){ return (t.num!=null?t.num+'. ':'')+T(t.title); }
 
 /* ---------- стан сторінки ---------- */
 var scrollHandlers=[];
+var curAtlas=null;
 function resetPage(isHome){
+  if(curAtlas){ try{curAtlas.dispose();}catch(e){} curAtlas=null; }
   scrollHandlers=[];
   app.classList.toggle('narrow',!isHome);
   document.getElementById('readbar').hidden=true;
@@ -550,6 +575,42 @@ function subjectPage(sid){
     [].forEach.call(document.querySelectorAll('#list .tcard'),function(c){ c.style.display=(!v||c.dataset.s.indexOf(v)>-1)?'':'none'; }); };
 }
 
+
+/* ---------- 3D-атлас ---------- */
+var ATL_MODEL=/^t(0[1-9]|1\d|20)$/;
+var ATL_Q={t22:'oral cavity tongue teeth anatomy',t23:'pharynx esophagus stomach anatomy',t24:'small intestine large intestine anatomy',t25:'liver pancreas anatomy',t26:'larynx nasal cavity anatomy',t27:'lungs trachea bronchi anatomy',t28:'kidney urinary system anatomy',t29:'male reproductive system anatomy',t30:'female reproductive system anatomy',t31:'thyroid adrenal thymus spleen anatomy',t33:'spinal cord anatomy',t34:'brainstem medulla pons anatomy',t35:'cerebellum fourth ventricle anatomy',t36:'midbrain diencephalon thalamus anatomy',t37:'basal ganglia lateral ventricles anatomy',t38:'cerebral cortex gyri sulci anatomy',t39:'meninges brain anatomy',t40:'spinal cord tracts anatomy',t41:'human eye anatomy',t42:'human ear anatomy',t44:'cranial nerves anatomy',t45:'cranial nerves anatomy',t46:'cranial nerves anatomy',t47:'human heart anatomy',t48:'human heart anatomy coronary arteries',t49:'aortic arch carotid artery anatomy',t50:'subclavian artery internal carotid anatomy',t51:'jugular vein head neck veins anatomy',t53:'thoracic aorta anatomy',t54:'abdominal aorta anatomy',t55:'inferior vena cava azygos vein anatomy',t56:'portal vein anatomy',t57:'lymphatic system thoracic duct anatomy',t58:'autonomic nervous system anatomy',t59:'autonomic plexuses anatomy',t60:'upper limb arteries veins anatomy',t61:'lower limb arteries veins anatomy',t62:'spinal nerves cervical plexus anatomy',t63:'brachial plexus anatomy',t64:'lumbar plexus anatomy',t65:'sacral plexus anatomy'};
+function loadScript(src,cb,err){ var s=document.createElement('script'); s.src=src; s.onload=cb; s.onerror=err; document.head.appendChild(s); }
+function atlasBlock(sid,tid){
+  if(sid!=='anatomy') return '';
+  if(ATL_MODEL.test(tid)) return '<div class="atlas" id="atlas"><button class="btn sec" id="atlasOpen">🧊 '+esc(tr('atlasOpen'))+'</button></div>';
+  if(ATL_Q[tid]) return '<div class="atlas"><a class="btn sec" target="_blank" rel="noopener" href="https://sketchfab.com/search?q='+encodeURIComponent(ATL_Q[tid])+'&type=models">🧊 '+esc(tr('atlasExt'))+' ↗</a><div class="a3d-note">'+esc(tr('atlasExtNote'))+'</div></div>';
+  return '';
+}
+var ATL_MISS={t02:{uk:'У моделі немає груднини та куприка.',ru:'В модели нет грудины и копчика.',en:'The model has no sternum or coccyx.'},t13:{uk:'Частини м’язів спини (наприклад, найширший м’яз спини) у моделі відсутні.',ru:'Часть мышц спины (например, широчайшая мышца) в модели отсутствует.',en:'Some back muscles (e.g. latissimus dorsi) are missing from the model.'},t14:{uk:'Прямий, внутрішній косий і поперечний м’язи живота у моделі відсутні.',ru:'Прямая, внутренняя косая и поперечная мышцы живота в модели отсутствуют.',en:'Rectus abdominis, internal oblique and transversus abdominis are missing.'},t15:{uk:'М’язів голови та діафрагми в моделі немає, тому показано череп.',ru:'Мышц головы и диафрагмы в модели нет, поэтому показан череп.',en:'Head muscles and the diaphragm are not in the model, so the skull is shown.'},t16:{uk:'Показано лише частину м’язів шиї.',ru:'Показана только часть мышц шеи.',en:'Only some neck muscles are shown.'},t18:{uk:'Дрібні м’язи кисті в моделі відсутні, показані кістки та сухожилки/м’язи передпліччя.',ru:'Мелких мышц кисти в модели нет, показаны кости и мышцы предплечья.',en:'Intrinsic hand muscles are not in the model; bones and forearm muscles are shown.'},t20:{uk:'Дрібні м’язи стопи в моделі представлені частково.',ru:'Мелкие мышцы стопы представлены в модели частично.',en:'Intrinsic foot muscles are only partly present in the model.'}};
+function openAtlas(tid){
+  var box=document.getElementById('atlas'); box.innerHTML='<div class="a3d-msg" style="position:static">'+esc(tr('atlasLoading'))+'</div>';
+  var base='models/';
+  function go(parts){
+    var P=parts[tid]||[], names={}, types={};
+    P.forEach(function(p){ names[p[0]]=p[2]; types[p[1]==='tendon'?'ligament':p[1]]=1; });
+    var h='<div class="a3d-bar"><div class="a3d-layers">';
+    [['bone','atlasBone'],['muscle','atlasMuscle'],['ligament','atlasLig'],['joint','atlasDisc']].forEach(function(l){ if(types[l[0]]) h+='<label><input type="checkbox" checked data-l="'+l[0]+'"> <i class="dot '+l[0]+'"></i>'+esc(tr(l[1]))+'</label>'; });
+    h+='</div><button class="a3d-btn" id="a3dReset">'+esc(tr('atlasReset'))+'</button></div><div class="a3d" id="a3d"></div><div class="a3d-hint">'+esc(tr('atlasHint'))+'</div>';
+    if(ATL_MISS[tid]) h+='<div class="a3d-note">'+esc(T(ATL_MISS[tid]))+'</div>';
+    h+='<div class="a3d-chips">'+P.map(function(p){ return '<button class="a3d-chip" data-slug="'+esc(p[0])+'">'+esc(p[2])+'</button>'; }).join('')+'</div>';
+    h+='<div class="a3d-note">'+esc(tr('atlasNames'))+' '+esc(tr('atlasCredit'))+' <a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html" target="_blank" rel="noopener">CC BY 4.0</a></div>';
+    box.innerHTML=h;
+    var v=window.Atlas3D.mount(document.getElementById('a3d'),{url:base+tid+'.glb',label:function(s){return names[s]||s;},t:{loading:tr('atlasLoading'),fail:tr('atlasFail'),noGL:tr('atlasNoGL')}});
+    curAtlas=v;
+    [].forEach.call(box.querySelectorAll('[data-l]'),function(c){ c.onchange=function(){ v.layer(c.dataset.l,c.checked); }; });
+    [].forEach.call(box.querySelectorAll('.a3d-chip'),function(b){ b.onclick=function(){ v.select(b.classList.contains('on')?null:b.dataset.slug); }; });
+    document.getElementById('a3dReset').onclick=function(){ v.reset(); };
+  }
+  function fail(){ box.innerHTML='<div class="a3d-note">'+esc(tr('atlasFail'))+'</div>'; }
+  function parts(){ fetch(base+'parts.json').then(function(r){return r.json();}).then(go).catch(fail); }
+  if(window.Atlas3D) parts(); else loadScript(base+'viewer.js',parts,fail);
+}
+
 function topicPage(sid,tid){
   var s=subj(sid), t=topic(s,tid); if(!t) return notFound();
   resetPage(false); ls('prep_last',JSON.stringify({s:sid,t:tid}));
@@ -558,6 +619,7 @@ function topicPage(sid,tid){
   var bodySrc=T(t.body)||'<p class="muted">'+esc(tr('noMaterial'))+'</p>';
   var tmp=document.createElement('div'); tmp.innerHTML=bodySrc;
   var toc=''; [].forEach.call(tmp.querySelectorAll('h2'),function(el,i){ el.id='sec'+i; toc+='<a href="javascript:void(0)" data-go="sec'+i+'">'+esc(el.textContent)+'</a>'; });
+  h+=atlasBlock(sid,tid);
   if(!hasLang(t.body)) h+='<div class="note">'+esc(tr('onlyUk'))+'</div>';
   if(toc) h+='<div class="toc">'+toc+'</div>';
   h+='<div class="body">'+tmp.innerHTML+'</div>';
@@ -570,6 +632,7 @@ function topicPage(sid,tid){
   var idx=s.topics.indexOf(t), prev=s.topics[idx-1], next=s.topics[idx+1];
   if(prev||next) h+='<div class="row">'+(prev?'<a class="btn sec" href="#/'+sid+'/'+prev.id+'">'+esc(tr('prev'))+'</a>':'<span></span>')+(next?'<a class="btn sec" href="#/'+sid+'/'+next.id+'">'+esc(tr('next'))+'</a>':'<span></span>')+'</div>';
   app.innerHTML=h; window.scrollTo(0,0);
+  var ao=document.getElementById('atlasOpen'); if(ao) ao.onclick=function(){ openAtlas(tid); };
   document.getElementById('read').onclick=function(){ setRec(sid,tid,{read:!rec(sid,tid).read}); topicPage(sid,tid); };
   [].forEach.call(document.querySelectorAll('[data-go]'),function(a){ a.onclick=function(){ var el=document.getElementById(a.dataset.go); if(el) el.scrollIntoView({behavior:'smooth'}); }; });
   var rb=document.getElementById('readbar'); rb.hidden=false; var bar=rb.firstElementChild;
